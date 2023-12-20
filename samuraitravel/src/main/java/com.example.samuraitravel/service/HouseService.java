@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.samuraitravel.entity.House;
+import com.example.samuraitravel.form.HouseEditForm;
 import com.example.samuraitravel.form.HouseRegisterForm;
 import com.example.samuraitravel.repository.HouseRepository;
  
@@ -45,6 +46,31 @@ import com.example.samuraitravel.repository.HouseRepository;
                      
          houseRepository.save(house);
      }  
+     
+     @Transactional
+     public void update(HouseEditForm houseEditForm) {
+    	 House house = houseRepository.getReferenceById(houseEditForm.getId());
+    	 MultipartFile imageFile = houseEditForm.getImageFile();
+    	 
+    	 if (!imageFile.isEmpty()) {
+    		 String imageName = imageFile.getOriginalFilename();
+    		 String hashedimageName = generateNewFileName(imageName);
+    		 Path filePath = Paths.get("src/main/resouces/static/storage" + hashedimageName);
+    		 copyImageFile(imageFile, filePath);
+    		 house.setImageName(hashedimageName);
+    	 }
+         
+    	 house.setName(houseEditForm.getName());
+    	 house.setDescription(houseEditForm.getDescription());
+    	 house.setPrice(houseEditForm.getPrice());
+    	 house.setCapacity(houseEditForm.getCapacity());
+    	 house.setPostalCode(houseEditForm.getPostalCode());
+    	 house.setAddress(houseEditForm.getAddress());
+    	 house.setPhoneNumber(houseEditForm.getPhoneNumber());
+    	 
+    	 houseRepository.save(house);
+     }
+    	 
      
      // UUIDを使って生成したファイル名を返す
      public String generateNewFileName(String fileName) {
