@@ -25,7 +25,7 @@
      <body>
 		 <!-- ヘッダーの部品化 -->
 		 <div th:fragment="header" th:remove="tag">
-			 <nav crass="navbar navbar-expand-md navbar-light bg-white shadow-sm samuraitravel-navbar">
+			 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm samuraitravel-navbar">
 				 <div class="container samuraitravel-container">
 					 <a class="navbar-brand"  th:href="@{/}">
 						 <img class="samuraitravel-logo me-1 " th:src="@{/images/logo.png}" alt="SAMURAI Travel">
@@ -51,7 +51,12 @@
                                      <span sec:authentication="principal.user.name"></span>
                                  </a>
          
-                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownGeneral">                                                                  
+                                 <a class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownGeneral">  
+									 
+									 <a class="dropdown-item samuraitravel-dropdown-item" th:href="@{/user}">会員情報</a>  
+                                     
+                                     <div class="dropdown-divider"></div> 
+                                                                                                    
                                      <a class="dropdown-item samuraitravel-dropdown-item" th:href="@{/logout}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                          ログアウト
                                      </a>
